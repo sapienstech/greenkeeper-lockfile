@@ -43,13 +43,6 @@ module.exports = function upload () {
   let remote = `git@github.com:${info.repoSlug}`
   if (info.gitUrl) remote = info.gitUrl
 
-  if (env.GH_TOKEN) {
-    if (remote.slice(0, 5) !== 'https') remote = `https://github.com/${info.repoSlug}`
-    const urlParsed = url.parse(remote)
-    urlParsed.auth = env.GH_TOKEN
-    remote = url.format(urlParsed)
-  }
-
   const err = fs.openSync('gk-lockfile-git-push.err', 'w')
 
   exec(`git remote add gk-origin ${remote}`)
